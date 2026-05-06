@@ -1,0 +1,381 @@
+\documentclass[12pt,a4paper]{ctexart}
+
+% 页面设置
+\usepackage[
+    left=2.5cm,
+    right=2.5cm,
+    top=2.3cm,
+    bottom=2.3cm
+]{geometry}
+
+% 常用宏包
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{enumitem}
+\usepackage{tabularx}
+\usepackage{amsmath, amssymb}
+\usepackage{hyperref}
+
+\tcbuselibrary{skins, breakable} 
+ 
+% ======================
+% 颜色主题：清爽学习笔记风
+% ======================
+
+% 主色：深蓝绿
+\definecolor{MainColor}{HTML}{2A6F73}
+
+% 辅助色：青绿色
+\definecolor{SecondColor}{HTML}{3CAEA3}
+
+% 浅背景色
+\definecolor{LightMain}{HTML}{EAF7F6}
+
+% 标题深色
+\definecolor{TitleDark}{HTML}{1F3A40}
+
+% 文字灰
+\definecolor{TextGray}{HTML}{555555}
+
+% 边框灰
+\definecolor{BorderGray}{HTML}{CBD5D6}
+
+% 提醒色：柔和橙
+\definecolor{WarnColor}{HTML}{F2B35D}
+
+% 易错点红色
+\definecolor{ErrorColor}{HTML}{C94C4C}
+
+% 定义框紫色
+\definecolor{DefineColor}{HTML}{6C63B7}
+
+% ======================
+% 正文设置
+% ======================
+
+\linespread{1.25}
+\setlength{\parindent}{2em}
+\setlength{\parskip}{0.25em}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=MainColor,
+  urlcolor=MainColor
+}
+
+% ======================
+% 页眉页脚
+% ======================
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot[L]{\textcolor{MainColor}{机器学习笔记}}
+\fancyfoot[R]{\textcolor{MainColor}{\thepage}}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% ======================
+% 顶部小标题栏
+% ======================
+
+\newcommand{\topbar}[2]{
+  \noindent
+  {\small\textcolor{MainColor}{#1}}
+  \hfill
+  {\small\bfseries\textcolor{TitleDark}{#2}}
+  \par\vspace{0.35em}
+  {\color{BorderGray}\hrule}
+  \vspace{1.2em}
+}
+
+% ======================
+% 标题卡片
+% ======================
+
+\newcommand{\notetitlecard}[6]{
+\begin{tcolorbox}[
+  enhanced,
+  colback=white,
+  colframe=BorderGray,
+  boxrule=0.6pt,
+  arc=2mm,
+  left=12pt,
+  right=12pt,
+  top=10pt,
+  bottom=10pt,
+  borderline west={4pt}{0pt}{SecondColor}
+]
+\begin{tabularx}{\linewidth}{X r}
+{\small\textcolor{TextGray}{#1}} & {\small\textcolor{TextGray}{#2}} \\[0.9em]
+\multicolumn{2}{l}{
+  {\Huge\bfseries\textcolor{MainColor}{#3}}
+} \\[0.45em]
+\multicolumn{2}{l}{
+  {\large\textcolor{SecondColor!90!black}{#4}}
+} \\[0.45em]
+\multicolumn{2}{l}{
+  {\small\textcolor{TextGray}{课程：#5 \qquad 作者：#6}}
+}
+\end{tabularx}
+\end{tcolorbox}
+\vspace{1em}
+}
+
+% ======================
+% 摘要框
+% ======================
+
+\newtcolorbox{summarybox}[1][本节摘要]{
+  enhanced,
+  breakable,
+  colback=LightMain,
+  colframe=SecondColor,
+  colbacktitle=SecondColor,
+  coltitle=white,
+  title={#1},
+  fonttitle=\bfseries,
+  boxrule=0.6pt,
+  arc=2mm,
+  left=12pt,
+  right=12pt,
+  top=10pt,
+  bottom=10pt
+}
+
+% ======================
+% 定义框
+% ======================
+
+\newtcolorbox{definitionbox}[1][定义]{
+  enhanced,
+  breakable,
+  colback=DefineColor!6,
+  colframe=DefineColor,
+  colbacktitle=DefineColor,
+  coltitle=white,
+  title={#1},
+  fonttitle=\bfseries,
+  boxrule=0.6pt,
+  arc=2mm,
+  left=12pt,
+  right=12pt,
+  top=10pt,
+  bottom=10pt
+}
+
+% ======================
+% 重点框
+% ======================
+
+\newtcolorbox{keybox}[1][重点]{
+  enhanced,
+  breakable,
+  colback=MainColor!5,
+  colframe=MainColor,
+  colbacktitle=MainColor,
+  coltitle=white,
+  title={#1},
+  fonttitle=\bfseries,
+  boxrule=0.6pt,
+  arc=2mm,
+  left=12pt,
+  right=12pt,
+  top=10pt,
+  bottom=10pt
+}
+
+% ======================
+% 例题框
+% ======================
+
+\newtcolorbox{examplebox}[1][例题]{
+  enhanced,
+  breakable,
+  colback=white,
+  colframe=SecondColor,
+  colbacktitle=SecondColor!85!black,
+  coltitle=white,
+  title={#1},
+  fonttitle=\bfseries,
+  boxrule=0.6pt,
+  arc=2mm,
+  left=12pt,
+  right=12pt,
+  top=10pt,
+  bottom=10pt
+}
+
+% ======================
+% 易错点框
+% ======================
+
+\newtcolorbox{mistakebox}[1][易错点]{
+  enhanced,
+  breakable,
+  colback=ErrorColor!5,
+  colframe=ErrorColor,
+  colbacktitle=ErrorColor,
+  coltitle=white,
+  title={#1},
+  fonttitle=\bfseries,
+  boxrule=0.6pt,
+  arc=2mm,
+  left=12pt,
+  right=12pt,
+  top=10pt,
+  bottom=10pt
+}
+
+% ======================
+% 提醒框
+% ======================
+
+\newtcolorbox{tipbox}[1][提示]{
+  enhanced,
+  breakable,
+  colback=WarnColor!10,
+  colframe=WarnColor,
+  colbacktitle=WarnColor,
+  coltitle=white,
+  title={#1},
+  fonttitle=\bfseries,
+  boxrule=0.6pt,
+  arc=2mm,
+  left=12pt,
+  right=12pt,
+  top=10pt,
+  bottom=10pt
+}
+
+% ======================
+% 章节标题样式
+% ======================
+
+\titleformat{\section}
+  {\Large\bfseries\color{MainColor}}
+  {\thesection}
+  {0.8em}
+  {}
+
+\titleformat{\subsection}
+  {\large\bfseries\color{TitleDark}}
+  {\thesubsection}
+  {0.8em}
+  {}
+
+\titleformat{\subsubsection}
+  {\normalsize\bfseries\color{SecondColor!80!black}}
+  {\thesubsubsection}
+  {0.8em}
+  {}
+
+% ======================
+% 列表样式
+% ======================
+
+\setlist[itemize]{
+  leftmargin=2.2em,
+  itemsep=0.3em,
+  topsep=0.4em
+}
+
+\setlist[enumerate]{
+  leftmargin=2.2em,
+  itemsep=0.3em,
+  topsep=0.4em
+}
+
+% ======================
+% 自定义强调命令
+% ======================
+
+\newcommand{\important}[1]{\textbf{\textcolor{MainColor}{#1}}}
+\newcommand{\warning}[1]{\textbf{\textcolor{ErrorColor}{#1}}}
+\newcommand{\concept}[1]{\textbf{\textcolor{DefineColor}{#1}}}
+
+% ======================
+% 正文开始
+% ======================
+% 一些解释,关于box的说明
+% 本文共涉及摘要框summarybox,定义框definitionbox
+% 重点框keybox,例题框examplebox,易错点框mistakebox
+% 提醒框tipbox 六种框
+% ======================
+
+
+\begin{document}
+
+\topbar{吴恩达机器学习}{学习笔记}
+
+\notetitlecard
+  {Study Notes Series}
+  {2026 Spring}
+  {吴恩达机器学习笔记(1)}
+  {}
+  {机器学习}
+  {C++与草稿纸}
+
+\begin{summarybox}
+摘要部分直接写内容
+\end{summarybox}
+
+\section{机器学习概论}
+
+\begin{definitionbox}[机器学习的定义]
+塞缪尔（Arthur Samuel）对机器学习的\textcolor{red}{经典定义}是：
+
+机器学习是使计算机在没有被明确编程的情况下，具备学习能力的研究领域。
+\\
+Machine Learning is the field of study
+that gives computers the ability to learn
+without being explicitly programmed.
+\end{definitionbox}
+
+\begin{keybox}[机器学习的类型]
+如今，机器学习分为三种类型
+\begin{itemize}
+    \item 监督学习（Supervised Learning）
+    \item 非监督学习（Unsupervised Learning）
+    \item 强化学习（Reinforcement Learning）
+\end{itemize}
+其中，监督学习（Supervised Learning）使用较多。
+\end{keybox}
+
+\section{监督式机器学习与非监督式机器学习}
+\subsection{监督学习}
+\begin{definitionbox}[监督学习的关键特征]
+给算法一组“输入—正确输出”的样本，让算法学习从输入到输出的映射关系。
+\end{definitionbox}
+
+
+\begin{examplebox}[监督学习的分类和用途]
+
+\begin{center}
+    \begin{tabularx}{\linewidth}{|c|c|X|}
+        \hline
+        类型 & 输出结果 & 典型例子 \\
+        \hline
+        \textcolor{red}{回归（Regression）} & 连续值 & 预测房价、预测气温、预测成绩 \\
+        \hline
+        \textcolor{red}{分类（Classification）} & 离散类别 & 判断垃圾邮件、判断肿瘤良恶性、识别数字 \\
+        \hline
+    \end{tabularx}
+\end{center}
+\end{examplebox}
+
+\subsection{非监督学习}
+\section{回归模型}
+
+\begin{examplebox}[例题 1]
+
+\end{examplebox}
+
+\section{用梯度下降法训练模型}
+
+\begin{mistakebox}
+
+\end{mistakebox}
+
+\end{document}
