@@ -1,10 +1,10 @@
-This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex 2026.4.29)  12 MAY 2026 00:28
+This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex 2026.4.29)  12 MAY 2026 00:07
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**d:/wuenda/thefirst.tex
-(d:/wuenda/thefirst.tex
+**d:/wuenda/notebook_ml_example.tex
+(d:/wuenda/notebook_ml_example.tex
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
 (d:/texlive/2026/texmf-dist/tex/latex/ctex/ctexart.cls (d:/texlive/2026/texmf-dist/tex/latex/ctex/config/ctexbackend.cfg
@@ -830,29 +830,29 @@ Package pdfcol Info: pdfTeX's color stacks are not available.
 \tcb@totallowerbox=\box86
 )
 Package hyperref Info: Option `colorlinks' set `true' on input line 66.
- (build/thefirst.aux)
-\openout1 = `thefirst.aux'.
+ (build/notebook_ml_example.aux)
+\openout1 = `notebook_ml_example.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 308.
-LaTeX Font Info:    ... okay on input line 308.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 308.
-LaTeX Font Info:    ... okay on input line 308.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 308.
-LaTeX Font Info:    ... okay on input line 308.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 308.
-LaTeX Font Info:    ... okay on input line 308.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 308.
-LaTeX Font Info:    ... okay on input line 308.
-LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 308.
-LaTeX Font Info:    ... okay on input line 308.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 308.
-LaTeX Font Info:    ... okay on input line 308.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 308.
-LaTeX Font Info:    ... okay on input line 308.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 308.
-LaTeX Font Info:    ... okay on input line 308.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 308.
-LaTeX Font Info:    ... okay on input line 308.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 302.
+LaTeX Font Info:    ... okay on input line 302.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 302.
+LaTeX Font Info:    ... okay on input line 302.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 302.
+LaTeX Font Info:    ... okay on input line 302.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 302.
+LaTeX Font Info:    ... okay on input line 302.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 302.
+LaTeX Font Info:    ... okay on input line 302.
+LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 302.
+LaTeX Font Info:    ... okay on input line 302.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 302.
+LaTeX Font Info:    ... okay on input line 302.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 302.
+LaTeX Font Info:    ... okay on input line 302.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 302.
+LaTeX Font Info:    ... okay on input line 302.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 302.
+LaTeX Font Info:    ... okay on input line 302.
 
 Package fontspec Info: 
 (fontspec)             Adjusting the maths setup (use [no-math] to avoid
@@ -860,56 +860,56 @@ Package fontspec Info:
 
 \symlegacymaths=\mathgroup6
 LaTeX Font Info:    Overwriting symbol font `legacymaths' in version `bold'
-(Font)                  OT1/cmr/m/n --> OT1/cmr/bx/n on input line 308.
-LaTeX Font Info:    Redeclaring math accent \acute on input line 308.
-LaTeX Font Info:    Redeclaring math accent \grave on input line 308.
-LaTeX Font Info:    Redeclaring math accent \ddot on input line 308.
-LaTeX Font Info:    Redeclaring math accent \tilde on input line 308.
-LaTeX Font Info:    Redeclaring math accent \bar on input line 308.
-LaTeX Font Info:    Redeclaring math accent \breve on input line 308.
-LaTeX Font Info:    Redeclaring math accent \check on input line 308.
-LaTeX Font Info:    Redeclaring math accent \hat on input line 308.
-LaTeX Font Info:    Redeclaring math accent \dot on input line 308.
-LaTeX Font Info:    Redeclaring math accent \mathring on input line 308.
-LaTeX Font Info:    Redeclaring math symbol \Gamma on input line 308.
-LaTeX Font Info:    Redeclaring math symbol \Delta on input line 308.
-LaTeX Font Info:    Redeclaring math symbol \Theta on input line 308.
-LaTeX Font Info:    Redeclaring math symbol \Lambda on input line 308.
-LaTeX Font Info:    Redeclaring math symbol \Xi on input line 308.
-LaTeX Font Info:    Redeclaring math symbol \Pi on input line 308.
-LaTeX Font Info:    Redeclaring math symbol \Sigma on input line 308.
-LaTeX Font Info:    Redeclaring math symbol \Upsilon on input line 308.
-LaTeX Font Info:    Redeclaring math symbol \Phi on input line 308.
-LaTeX Font Info:    Redeclaring math symbol \Psi on input line 308.
-LaTeX Font Info:    Redeclaring math symbol \Omega on input line 308.
-LaTeX Font Info:    Redeclaring math symbol \mathdollar on input line 308.
-LaTeX Font Info:    Redeclaring symbol font `operators' on input line 308.
+(Font)                  OT1/cmr/m/n --> OT1/cmr/bx/n on input line 302.
+LaTeX Font Info:    Redeclaring math accent \acute on input line 302.
+LaTeX Font Info:    Redeclaring math accent \grave on input line 302.
+LaTeX Font Info:    Redeclaring math accent \ddot on input line 302.
+LaTeX Font Info:    Redeclaring math accent \tilde on input line 302.
+LaTeX Font Info:    Redeclaring math accent \bar on input line 302.
+LaTeX Font Info:    Redeclaring math accent \breve on input line 302.
+LaTeX Font Info:    Redeclaring math accent \check on input line 302.
+LaTeX Font Info:    Redeclaring math accent \hat on input line 302.
+LaTeX Font Info:    Redeclaring math accent \dot on input line 302.
+LaTeX Font Info:    Redeclaring math accent \mathring on input line 302.
+LaTeX Font Info:    Redeclaring math symbol \Gamma on input line 302.
+LaTeX Font Info:    Redeclaring math symbol \Delta on input line 302.
+LaTeX Font Info:    Redeclaring math symbol \Theta on input line 302.
+LaTeX Font Info:    Redeclaring math symbol \Lambda on input line 302.
+LaTeX Font Info:    Redeclaring math symbol \Xi on input line 302.
+LaTeX Font Info:    Redeclaring math symbol \Pi on input line 302.
+LaTeX Font Info:    Redeclaring math symbol \Sigma on input line 302.
+LaTeX Font Info:    Redeclaring math symbol \Upsilon on input line 302.
+LaTeX Font Info:    Redeclaring math symbol \Phi on input line 302.
+LaTeX Font Info:    Redeclaring math symbol \Psi on input line 302.
+LaTeX Font Info:    Redeclaring math symbol \Omega on input line 302.
+LaTeX Font Info:    Redeclaring math symbol \mathdollar on input line 302.
+LaTeX Font Info:    Redeclaring symbol font `operators' on input line 302.
 LaTeX Font Info:    Encoding `OT1' has changed to `TU' for symbol font
-(Font)              `operators' in the math version `normal' on input line 308.
+(Font)              `operators' in the math version `normal' on input line 302.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
-(Font)                  OT1/cmr/m/n --> TU/lmr/m/n on input line 308.
+(Font)                  OT1/cmr/m/n --> TU/lmr/m/n on input line 302.
 LaTeX Font Info:    Encoding `OT1' has changed to `TU' for symbol font
-(Font)              `operators' in the math version `bold' on input line 308.
+(Font)              `operators' in the math version `bold' on input line 302.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
-(Font)                  OT1/cmr/bx/n --> TU/lmr/m/n on input line 308.
+(Font)                  OT1/cmr/bx/n --> TU/lmr/m/n on input line 302.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
-(Font)                  TU/lmr/m/n --> TU/lmr/m/n on input line 308.
+(Font)                  TU/lmr/m/n --> TU/lmr/m/n on input line 302.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
-(Font)                  OT1/cmr/m/it --> TU/lmr/m/it on input line 308.
+(Font)                  OT1/cmr/m/it --> TU/lmr/m/it on input line 302.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
-(Font)                  OT1/cmr/bx/n --> TU/lmr/b/n on input line 308.
+(Font)                  OT1/cmr/bx/n --> TU/lmr/b/n on input line 302.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `normal'
-(Font)                  OT1/cmss/m/n --> TU/lmss/m/n on input line 308.
+(Font)                  OT1/cmss/m/n --> TU/lmss/m/n on input line 302.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `normal'
-(Font)                  OT1/cmtt/m/n --> TU/lmtt/m/n on input line 308.
+(Font)                  OT1/cmtt/m/n --> TU/lmtt/m/n on input line 302.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
-(Font)                  TU/lmr/m/n --> TU/lmr/b/n on input line 308.
+(Font)                  TU/lmr/m/n --> TU/lmr/b/n on input line 302.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
-(Font)                  OT1/cmr/bx/it --> TU/lmr/b/it on input line 308.
+(Font)                  OT1/cmr/bx/it --> TU/lmr/b/it on input line 302.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
-(Font)                  OT1/cmss/bx/n --> TU/lmss/b/n on input line 308.
+(Font)                  OT1/cmss/bx/n --> TU/lmss/b/n on input line 302.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
-(Font)                  OT1/cmtt/m/n --> TU/lmtt/b/n on input line 308.
+(Font)                  OT1/cmtt/m/n --> TU/lmtt/b/n on input line 302.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: xetex
@@ -945,28 +945,28 @@ LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-Package hyperref Info: Link coloring ON on input line 308.
-(build/thefirst.out) (build/thefirst.out)
+Package hyperref Info: Link coloring ON on input line 302.
+(build/notebook_ml_example.out) (build/notebook_ml_example.out)
 \@outlinefile=\write4
-\openout4 = `thefirst.out'.
+\openout4 = `notebook_ml_example.out'.
 
  (d:/texlive/2026/texmf-dist/tex/latex/amsfonts/umsa.fd) (d:/texlive/2026/texmf-dist/tex/latex/amsfonts/umsb.fd) [1
 
-] [2] (build/thefirst.aux)
+] [2] (build/notebook_ml_example.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2022/07/14>
  ***********
-Package rerunfilecheck Info: File `thefirst.out' has not changed.
-(rerunfilecheck)             Checksum: 658C3D63763E05CFAA78BB2765DA38A3;646.
+Package rerunfilecheck Info: File `notebook_ml_example.out' has not changed.
+(rerunfilecheck)             Checksum: 45FE55633B9FE1F4B022DE5844401793;670.
  ) 
 Here is how much of TeX's memory you used:
- 30968 strings out of 468168
- 686595 string characters out of 5436524
- 1133378 words of memory out of 5000000
- 59216 multiletter control sequences out of 15000+600000
+ 30868 strings out of 468168
+ 680999 string characters out of 5436524
+ 1130514 words of memory out of 5000000
+ 59116 multiletter control sequences out of 15000+600000
  634600 words of font info for 90 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 116i,11n,121p,1204b,935s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 116i,11n,121p,1215b,935s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on build/thefirst.xdv (2 pages, 53672 bytes).
+Output written on build/notebook_ml_example.xdv (2 pages, 42188 bytes).

@@ -18,8 +18,8 @@
 \usepackage{amsmath, amssymb}
 \usepackage{hyperref}
 
-\tcbuselibrary{skins, breakable} 
- 
+\tcbuselibrary{skins, breakable}
+
 % ======================
 % 颜色主题：清爽学习笔记风
 % ======================
@@ -364,7 +364,23 @@ without being explicitly programmed.
     \end{tabularx}
 \end{center}
 \end{examplebox}
+
 \subsection{非监督学习}
+\begin{definitionbox}[非监督学习的关键特征]
+数据集没有标签，只有特征 $x^{(i)}$。
+目标是让算法自行在数据中寻找隐藏的结构、模式或规律。
+\end{definitionbox}
+
+\begin{examplebox}[监督学习的分类和主要特征]
+\begin{itemize}
+  \item \textcolor{red}{聚类(Clustering)}:用于把相同的数据点放在一起
+  \item \textcolor{red}{异常检测(Anomaly detection)}:用来寻找特殊数据点
+  \item \textcolor{red}{降维(Dimensionality reduction)}:用更少的变量去压缩存储数据
+
+\end{itemize}
+\end{examplebox}
+
+
 \section{回归模型}
 
 \begin{examplebox}[例题 1]
@@ -372,6 +388,7 @@ without being explicitly programmed.
 \end{examplebox}
 
 \section{用梯度下降法训练模型}
+
 \begin{mistakebox}
 
 \end{mistakebox}
