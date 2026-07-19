@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex 2026.4.29)  12 MAY 2026 00:28
+This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex 2026.4.29)  19 JUL 2026 22:06
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -952,7 +952,7 @@ Package hyperref Info: Link coloring ON on input line 308.
 
  (d:/texlive/2026/texmf-dist/tex/latex/amsfonts/umsa.fd) (d:/texlive/2026/texmf-dist/tex/latex/amsfonts/umsb.fd) [1
 
-] [2] (build/thefirst.aux)
+] [2] [3] [4] (build/thefirst.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2022/07/14>
@@ -961,12 +961,12 @@ Package rerunfilecheck Info: File `thefirst.out' has not changed.
 (rerunfilecheck)             Checksum: 658C3D63763E05CFAA78BB2765DA38A3;646.
  ) 
 Here is how much of TeX's memory you used:
- 30968 strings out of 468168
- 686595 string characters out of 5436524
- 1133378 words of memory out of 5000000
- 59216 multiletter control sequences out of 15000+600000
- 634600 words of font info for 90 fonts, out of 8000000 for 9000
+ 31061 strings out of 468168
+ 691474 string characters out of 5436524
+ 1138368 words of memory out of 5000000
+ 59309 multiletter control sequences out of 15000+600000
+ 636148 words of font info for 96 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 116i,11n,121p,1204b,935s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 116i,14n,121p,1204b,935s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on build/thefirst.xdv (2 pages, 53672 bytes).
+Output written on build/thefirst.xdv (4 pages, 93812 bytes).

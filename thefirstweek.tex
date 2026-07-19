@@ -318,7 +318,18 @@
   {C++与草稿纸}
 
 \begin{summarybox}
-摘要部分直接写内容
+本章介绍机器学习的基本概念，并以单变量线性回归为例，梳理从建立模型、
+定义代价函数到使用梯度下降训练参数的完整过程。
+\begin{itemize}[leftmargin=2em, itemsep=2pt, topsep=4pt]
+  \item \textbf{机器学习类型：}机器学习主要包括监督学习、非监督学习和强化学习；
+  监督学习利用带标签数据学习输入到输出的映射，非监督学习则从无标签数据中发现结构与规律。
+  \item \textbf{常见任务：}监督学习可分为预测连续值的回归问题和预测离散类别的分类问题；
+  非监督学习的典型任务包括聚类、异常检测和降维。
+  \item \textbf{线性回归：}使用 $f_{w,b}(x)=wx+b$ 拟合数据，并通过最小化均方误差代价函数
+  $J(w,b)$ 寻找合适的参数 $w$ 和 $b$。
+  \item \textbf{梯度下降：}沿 $J(w,b)$ 梯度的反方向迭代更新参数。计算 $w$、$b$ 的偏导数时，
+  必须基于同一组更新前的参数，并在得到两个临时值后同时完成更新。
+\end{itemize}
 \end{summarybox}
 
 \section{机器学习概论}
@@ -383,14 +394,109 @@ without being explicitly programmed.
 
 \section{回归模型}
 
-\begin{examplebox}[例题 1]
+\begin{definitionbox}[回归问题]
+我们根据之前的数据预测出一个准确的输出值。
+\end{definitionbox}
+\begin{definitionbox}[分类问题]
+当我们想要预测离散的输出值，例如，我们正在寻找癌症肿瘤，并想要确定肿瘤是良性的还是恶性的，这就是0/1离散输出的问题。
+\end{definitionbox}
+\begin{examplebox}[机器学习的一些符号表示]
+\begin{center}
+  \begin{tabularx}{\linewidth}{|c|X|}
+      \hline
+      符号 & 表示意义 \\
+      \hline
+      $m$ & 训练集中实例的数量\\
+      \hline
+      $x$ & 特征/输入变量\\
+      \hline
+      $y$ & 目标变量/输出变量 \\
+      \hline
+      $(x,y)$ & 训练集中的实例 \\
+      \hline
+      $(x^{(i)},y^{(i)})$ & 第$i$个观察实例 \\
+      \hline
+      $h$ & 学习算法的解决方案或函数 \\
+      \hline
+  \end{tabularx}
+\end{center}
+\end{examplebox}
+\begin{definitionbox}[线性回归]
+  用一条直线（或线性函数）（$f(x) = wx + b$）拟合数据，从而预测连续数值。
+\end{definitionbox}
+\begin{examplebox}[线性回归的代价函数]
+  $$Cost \ function J(w,b) = \frac{1}{2m} \sum_{i = 1}^{n} (f_{w,b}^{(i)}(x) - y^{(i)})^2$$
+  \[
+  Goal : \ \underset{w,b}{minimize} \ J(w,b)
+  \]
+\end{examplebox}
+\section{用梯度下降法训练模型}
+\begin{definitionbox}[批量梯度下降公式]
+  $$w = w - \alpha \frac{\partial}{\partial w} J(w,b)$$
+  其中：$\alpha$表示学习率
+\end{definitionbox}
+\begin{mistakebox}[参数更新的正确与错误方式]
+  \begin{minipage}[t]{0.47\linewidth}
+    \vspace{0pt}
+    \small
+    \textbf{正确：同时更新参数}
+    \begin{align*}
+      \mathrm{tmp}_w &= w-\alpha\frac{\partial}{\partial w}J(w,b), \\
+      \mathrm{tmp}_b &= b-\alpha\frac{\partial}{\partial b}J(w,b), \\
+      w &= \mathrm{tmp}_w, \\
+      b &= \mathrm{tmp}_b.
+    \end{align*}
+    两个临时值均由同一组旧参数 $(w,b)$ 计算，之后再同时更新参数。
+  \end{minipage}
+  \hfill
+  \begin{minipage}[t]{0.47\linewidth}
+    \vspace{0pt}
+    \small
+    \textbf{错误：依次更新参数}
+    \begin{align*}
+      \mathrm{tmp}_w &= w-\alpha\frac{\partial}{\partial w}J(w,b), \\
+      w &= \mathrm{tmp}_w, \\
+      \mathrm{tmp}_b &= b-\alpha\frac{\partial}{\partial b}J(w,b), \\
+      b &= \mathrm{tmp}_b.
+    \end{align*}
+    计算 $\mathrm{tmp}_b$ 时，$w$ 已是更新后的值，因此两个梯度不在同一参数点上计算。
+  \end{minipage}
+\end{mistakebox}
 
+\begin{examplebox}[线性回归的梯度下降]
+  对于单变量线性回归模型
+  \[
+    f_{w,b}\bigl(x^{(i)}\bigr)=wx^{(i)}+b,
+  \]
+  其代价函数是关于 $w$ 和 $b$ 的二元函数：
+  \[
+    J(w,b)=\frac{1}{2m}\sum_{i=1}^{m}
+    \left(f_{w,b}\bigl(x^{(i)}\bigr)-y^{(i)}\right)^2.
+  \]
+  因此，可将梯度下降写成向量形式：
+  \[
+    \begin{pmatrix} w \\ b \end{pmatrix}
+    \leftarrow
+    \begin{pmatrix} w \\ b \end{pmatrix}
+    -\alpha\nabla J(w,b),
+    \qquad
+    \nabla J(w,b)=
+    \begin{pmatrix}
+      \dfrac{\partial J(w,b)}{\partial w} \\[6pt]
+      \dfrac{\partial J(w,b)}{\partial b}
+    \end{pmatrix}.
+  \]
+  对 $J(w,b)$ 分别求偏导，可得批量梯度下降的具体更新公式：
+  \begin{align*}
+    w &\leftarrow w-\alpha\frac{1}{m}\sum_{i=1}^{m}
+    \left(f_{w,b}\bigl(x^{(i)}\bigr)-y^{(i)}\right)x^{(i)}, \\
+    b &\leftarrow b-\alpha\frac{1}{m}\sum_{i=1}^{m}
+    \left(f_{w,b}\bigl(x^{(i)}\bigr)-y^{(i)}\right).
+  \end{align*}
+  重复上述过程直至 $J(w,b)$ 收敛。两个偏导数必须基于更新前的同一组
+  $(w,b)$ 同时计算。图中的参数与这里的记号对应为
+  $\theta_0=b$、$\theta_1=w$。
 \end{examplebox}
 
-\section{用梯度下降法训练模型}
-
-\begin{mistakebox}
-
-\end{mistakebox}
 
 \end{document}

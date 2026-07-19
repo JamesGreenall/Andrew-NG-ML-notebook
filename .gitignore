@@ -1,0 +1,35 @@
+# LaTeX build directories
+build/
+**/build/
+
+# LaTeX intermediate files
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.lof
+*.log
+*.lot
+*.nav
+*.out
+*.run.xml
+*.snm
+*.synctex.gz
+*.toc
+*.vrb
+*.xdv
+
+# Temporary files
+tmp/
+*.bak
+*.swp
+*~
+
+# Editor and OS metadata
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini
+
