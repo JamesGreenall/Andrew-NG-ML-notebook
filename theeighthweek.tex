@@ -1,0 +1,86 @@
+\input{templates/weekly-note-style.tex}
+\begin{document}
+\topbar{吴恩达机器学习}{学习笔记}
+\notetitlecard{Study Notes Series}{2026 Spring}{吴恩达机器学习笔记(8)}{}{机器学习}{C++与草稿纸}
+
+\begin{summarybox}
+本周回到无监督学习，介绍 K-均值聚类和主成分分析（PCA）。K-均值把样本分配给若干中心，PCA 则寻找低维方向以压缩和可视化数据。两者都需要明确目标、尺度和结果解释。
+\end{summarybox}
+
+\section{K-均值聚类}
+\begin{definitionbox}[无监督学习]
+无监督学习没有给定标签 $y$，算法只根据输入样本 $x^{(i)}$ 寻找数据中的结构。聚类的目标是把相似样本放在同一组，把不同样本分开。
+\end{definitionbox}
+\begin{keybox}[K-均值算法]
+给定簇数 $K$，K-均值重复两个步骤：
+\begin{enumerate}
+  \item \textbf{分配：}将每个样本分给距离最近的聚类中心 $\mu_k$；
+  \item \textbf{移动：}把每个中心更新为所属样本的均值。
+\end{enumerate}
+直到样本分配不再变化或目标函数改善很小。算法输出的是簇编号和中心，不是预先存在的类别名称。
+\end{keybox}
+\begin{definitionbox}[优化目标]
+K-均值最小化簇内平方距离：
+\[
+J(c,\mu)=\frac1m\sum_{i=1}^{m}\|x^{(i)}-\mu_{c^{(i)}}\|^2,
+\]
+其中 $c^{(i)}$ 是样本所属簇。分配步骤对固定中心最小化 $c$，移动步骤对固定分配最小化 $\mu$，所以每次迭代不会增加目标函数。
+\end{definitionbox}
+\begin{tipbox}[随机初始化与局部最优]
+K-均值的目标通常非凸，可能收敛到局部最优。随机选择不同初始中心并重复运行，保留目标函数最小的结果。若 $K$ 较小，随机初始化通常更可靠；若 $K$ 较大，应更加注意初始化质量。
+\end{tipbox}
+\begin{examplebox}[选择 $K$]
+肘部法绘制不同 $K$ 对应的代价，寻找下降速度明显变慢的位置。若没有清晰的肘部，也可以根据业务目标，例如压缩后希望保留多少类、库存需要多少组，选择具有实际意义的 $K$。
+\end{examplebox}
+
+\section{主成分分析 PCA}
+\subsection{动机：压缩与可视化}
+\begin{definitionbox}[低维表示]
+若数据位于高维空间但大部分变化集中在少数方向，可以用 $k<n$ 个方向近似表示样本。PCA 选择投影后重建误差较小的方向，而不是简单删除某些坐标。
+\end{definitionbox}
+\begin{keybox}[PCA 与线性回归的区别]
+PCA 是无监督的，不使用预测标签 $y$，目标是最小化正交投影的重建误差；线性回归则选择能预测 $y$ 的方向。不要为了压缩输入而直接运行线性回归或把 PCA 方向当作监督目标。
+\end{keybox}
+\subsection{PCA 算法}
+\begin{definitionbox}[标准步骤]
+对每个特征做均值归一化（必要时再除以标准差），得到 $x^{(i)}$。计算协方差矩阵
+\[
+\Sigma=\frac1mX^TX.
+\]
+对 $\Sigma$ 做特征值分解或奇异值分解，选取最大的 $k$ 个特征值对应的单位特征向量组成矩阵 $U_{reduce}\in\mathbb R^{n\times k}$，然后投影
+\[
+z^{(i)}=U_{reduce}^Tx^{(i)}.
+\]
+\end{definitionbox}
+\begin{examplebox}[二维到一维]
+若二维样本主要沿一条斜线分布，PCA 会选择这条方向作为第一主成分，把点投影成一个标量 $z$。这个标量保留了数据中最大的方差，适合可视化或降低后续模型的输入维度。
+\end{examplebox}
+\subsection{选择主成分数量}
+\begin{tipbox}[保留方差比例]
+选择最小的 $k$，使投影后保留的方差比例满足
+\[
+\frac{\sum_{j=1}^{k}\lambda_j}{\sum_{j=1}^{n}\lambda_j}\geq0.99
+\]
+或任务需要的其他阈值。也可以直接比较重建误差。$k$ 不能只凭“看起来方便”决定。
+\end{tipbox}
+\begin{definitionbox}[重建与信息损失]
+低维向量可以近似重建为
+\[
+\hat x^{(i)}=U_{reduce}z^{(i)}.
+\]
+重建误差 $\|x^{(i)}-\hat x^{(i)}\|^2$ 越小，说明压缩丢失的信息越少。
+\end{definitionbox}
+\begin{mistakebox}[PCA 的使用建议]
+\begin{itemize}
+  \item PCA 应只在训练集上拟合均值、尺度和主成分，再应用到验证集和测试集；
+  \item 不要把 PCA 当作解决过拟合的默认方法，先用验证误差确认它确实有帮助；
+  \item 对监督学习任务，若原始特征数量并不大，直接用正则化往往更易解释；
+  \item 特征尺度差异很大时不做缩放，会让 PCA 主要反映量纲而非真实变化。
+\end{itemize}
+\end{mistakebox}
+
+\section{本周知识脉络}
+\begin{keybox}[聚类与降维]
+K-均值通过“分配—移动”迭代最小化簇内距离；PCA 通过最大化保留方差、最小化重建误差寻找低维方向。前者输出组结构，后者输出连续坐标。二者都需要处理尺度、初始化或维度选择，并用下游目标验证实际价值。
+\end{keybox}
+\end{document}

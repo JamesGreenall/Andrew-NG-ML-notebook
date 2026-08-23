@@ -1,0 +1,398 @@
+\documentclass[12pt,a4paper]{ctexart}
+
+\usepackage[left=2.5cm,right=2.5cm,top=2.3cm,bottom=2.3cm]{geometry}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{enumitem}
+\usepackage{tabularx}
+\usepackage{amsmath,amssymb}
+\usepackage{hyperref}
+
+\tcbuselibrary{skins,breakable}
+
+\definecolor{MainColor}{HTML}{2A6F73}
+\definecolor{SecondColor}{HTML}{3CAEA3}
+\definecolor{LightMain}{HTML}{EAF7F6}
+\definecolor{TitleDark}{HTML}{1F3A40}
+\definecolor{TextGray}{HTML}{555555}
+\definecolor{BorderGray}{HTML}{CBD5D6}
+\definecolor{WarnColor}{HTML}{F2B35D}
+\definecolor{ErrorColor}{HTML}{C94C4C}
+\definecolor{DefineColor}{HTML}{6C63B7}
+
+\linespread{1.25}
+\setlength{\parindent}{2em}
+\setlength{\parskip}{0.25em}
+
+\hypersetup{colorlinks=true,linkcolor=MainColor,urlcolor=MainColor}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot[L]{\textcolor{MainColor}{机器学习笔记}}
+\fancyfoot[R]{\textcolor{MainColor}{\thepage}}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+\newcommand{\topbar}[2]{
+  \noindent{\small\textcolor{MainColor}{#1}}
+  \hfill{\small\bfseries\textcolor{TitleDark}{#2}}
+  \par\vspace{0.35em}{\color{BorderGray}\hrule}\vspace{1.2em}
+}
+
+\newcommand{\notetitlecard}[6]{
+\begin{tcolorbox}[
+  enhanced,colback=white,colframe=BorderGray,boxrule=0.6pt,arc=2mm,
+  left=12pt,right=12pt,top=10pt,bottom=10pt,
+  borderline west={4pt}{0pt}{SecondColor}]
+\begin{tabularx}{\linewidth}{X r}
+{\small\textcolor{TextGray}{#1}} & {\small\textcolor{TextGray}{#2}} \\[0.9em]
+\multicolumn{2}{l}{{\Huge\bfseries\textcolor{MainColor}{#3}}} \\[0.45em]
+\multicolumn{2}{l}{{\large\textcolor{SecondColor!90!black}{#4}}} \\[0.45em]
+\multicolumn{2}{l}{{\small\textcolor{TextGray}{课程：#5 \qquad 作者：#6}}}
+\end{tabularx}
+\end{tcolorbox}
+\vspace{1em}
+}
+
+\newtcolorbox{summarybox}[1][本节摘要]{
+  enhanced,breakable,colback=LightMain,colframe=SecondColor,
+  colbacktitle=SecondColor,coltitle=white,title={#1},fonttitle=\bfseries,
+  boxrule=0.6pt,arc=2mm,left=12pt,right=12pt,top=10pt,bottom=10pt}
+\newtcolorbox{definitionbox}[1][定义]{
+  enhanced,breakable,colback=DefineColor!6,colframe=DefineColor,
+  colbacktitle=DefineColor,coltitle=white,title={#1},fonttitle=\bfseries,
+  boxrule=0.6pt,arc=2mm,left=12pt,right=12pt,top=10pt,bottom=10pt}
+\newtcolorbox{keybox}[1][重点]{
+  enhanced,breakable,colback=MainColor!5,colframe=MainColor,
+  colbacktitle=MainColor,coltitle=white,title={#1},fonttitle=\bfseries,
+  boxrule=0.6pt,arc=2mm,left=12pt,right=12pt,top=10pt,bottom=10pt}
+\newtcolorbox{examplebox}[1][例题]{
+  enhanced,breakable,colback=white,colframe=SecondColor,
+  colbacktitle=SecondColor!85!black,coltitle=white,title={#1},fonttitle=\bfseries,
+  boxrule=0.6pt,arc=2mm,left=12pt,right=12pt,top=10pt,bottom=10pt}
+\newtcolorbox{mistakebox}[1][易错点]{
+  enhanced,breakable,colback=ErrorColor!5,colframe=ErrorColor,
+  colbacktitle=ErrorColor,coltitle=white,title={#1},fonttitle=\bfseries,
+  boxrule=0.6pt,arc=2mm,left=12pt,right=12pt,top=10pt,bottom=10pt}
+\newtcolorbox{tipbox}[1][提示]{
+  enhanced,breakable,colback=WarnColor!10,colframe=WarnColor,
+  colbacktitle=WarnColor,coltitle=white,title={#1},fonttitle=\bfseries,
+  boxrule=0.6pt,arc=2mm,left=12pt,right=12pt,top=10pt,bottom=10pt}
+
+\titleformat{\section}{\Large\bfseries\color{MainColor}}{\thesection}{0.8em}{}
+\titleformat{\subsection}{\large\bfseries\color{TitleDark}}{\thesubsection}{0.8em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries\color{SecondColor!80!black}}{\thesubsubsection}{0.8em}{}
+
+\setlist[itemize]{leftmargin=2.2em,itemsep=0.3em,topsep=0.4em}
+\setlist[enumerate]{leftmargin=2.2em,itemsep=0.3em,topsep=0.4em}
+
+\newcommand{\important}[1]{\textbf{\textcolor{MainColor}{#1}}}
+\newcommand{\warning}[1]{\textbf{\textcolor{ErrorColor}{#1}}}
+\newcommand{\concept}[1]{\textbf{\textcolor{DefineColor}{#1}}}
+
+\begin{document}
+
+\topbar{吴恩达机器学习}{学习笔记}
+
+\notetitlecard
+  {Study Notes Series}
+  {2026 Spring}
+  {吴恩达机器学习笔记(4)}
+  {}
+  {机器学习}
+  {C++与草稿纸}
+
+\begin{summarybox}
+本周介绍神经网络的\concept{表述（representation）}，说明它为什么能够用较少的参数表示复杂的非线性函数，并建立从输入层到输出层的前向传播记号。这里讨论模型结构和直观例子，不展开第五周的反向传播与参数学习。
+\begin{itemize}[leftmargin=2em,itemsep=2pt,topsep=4pt]
+  \item \textbf{使用动机：}多项式特征在高维输入下会产生特征数量爆炸，神经网络可以自动组合出更有用的高阶特征；
+  \item \textbf{模型结构：}神经网络由输入层、一个或多个隐藏层和输出层组成，每个神经元都是带激活函数的计算单元；
+  \item \textbf{前向传播：}用 $z^{(l+1)}=\Theta^{(l)}a^{(l)}$ 和 $a^{(l+1)}=g(z^{(l+1)})$ 逐层计算预测；
+  \item \textbf{直观理解：}单个神经元可以表示 AND、OR、NOT 等逻辑运算，多个神经元组合后可以表示 XNOR 等更复杂的函数；
+  \item \textbf{多类分类：}输出层设置多个单元，用 one-hot 向量表示类别，并以最大输出对应的类别作为预测结果。
+\end{itemize}
+\end{summarybox}
+
+\section{为什么需要神经网络}
+
+\subsection{非线性假设与特征数量爆炸}
+
+\begin{definitionbox}[多项式特征的局限]
+第三周中我们通过加入 $x_1^2,x_1x_2$ 等多项式特征，让逻辑回归能够表示弯曲的判定边界。但当原始特征很多时，组合特征的数量会迅速增长。若有 $n$ 个特征，仅考虑两两乘积，就有
+\[
+  \frac{n(n-1)}{2}
+\]
+个交叉项；如果继续加入更高次项，特征数量还会进一步增加。
+\end{definitionbox}
+
+\begin{examplebox}[图像分类中的特征规模]
+一张 $50\times50$ 的灰度图像可以展开为 $2500$ 个像素特征。若将每两个像素组合成一个二次特征，数量约为
+\[
+  \frac{2500^2}{2}\approx3.1\times10^6.
+\]
+直接把这些特征交给逻辑回归，会带来很高的存储和计算成本。神经网络通过多层计算学习中间表示，不必显式列出所有可能的多项式组合。
+\end{examplebox}
+
+\begin{keybox}[神经网络解决什么问题]
+神经网络仍然可以使用原始特征作为输入，但让隐藏层逐层学习新的特征表示。输出层再对这些更高级的表示进行分类或回归，因此可以用相对紧凑的参数表示复杂的非线性函数。
+
+这也是神经网络与手工特征工程的主要区别：特征变换不完全由人预先指定，而是由网络中的权重和激活函数共同决定，并在训练过程中学习。
+\end{keybox}
+
+\subsection{神经元与大脑的类比}
+
+\begin{definitionbox}[生物学启发]
+神经网络的早期思想受到生物神经系统启发。生物神经元接收多个输入信号，经过处理后向其他神经元发送输出；人工神经网络则把这种过程抽象成“加权求和加激活函数”的计算单元。
+
+这种类比主要用于帮助理解模型结构，并不意味着当前的人工神经网络完整模拟了人脑。课程中真正需要掌握的是可计算的数学模型，而不是生物学细节。
+\end{definitionbox}
+
+\begin{tipbox}[为什么近年应用重新兴起]
+神经网络在二十世纪八九十年代已经出现，后来因为计算量大、数据和硬件有限而较少使用。随着数据规模、并行硬件和优化方法的发展，大规模神经网络重新成为许多任务中的重要方法。\important{计算能力提升使更大的模型变得可训练}，但模型仍然需要合理的数据、目标函数和验证方法。
+\end{tipbox}
+
+\section{神经网络的模型表示}
+
+\subsection{层、激活单元与权重}
+
+\begin{definitionbox}[神经网络的层]
+一个前馈神经网络通常包含：
+\begin{itemize}
+  \item \textbf{输入层（Input Layer）：}接收原始特征 $x_1,\ldots,x_n$；
+  \item \textbf{隐藏层（Hidden Layer）：}对上一层的输出进行变换，可以有一层或多层；
+  \item \textbf{输出层（Output Layer）：}产生最终预测结果。
+\end{itemize}
+除输出层外，常在每层加入恒为 $1$ 的偏置单元（bias unit），以便模型学习平移项。每个非偏置单元称为一个\concept{激活单元（activation unit）}。
+\end{definitionbox}
+
+\begin{keybox}[单个神经元的计算]
+对某一层的神经元，先对输入做加权求和，再经过激活函数 $g$：
+\[
+  z=\theta_0a_0+\theta_1a_1+\cdots+\theta_na_n,
+  \qquad
+  a=g(z),
+  \qquad a_0=1.
+\]
+本周沿用第三周的 Sigmoid 激活函数
+\[
+  g(z)=\frac{1}{1+e^{-z}}.
+\]
+权重决定每个输入对当前单元的影响，偏置权重决定激活曲线的位置。
+\end{keybox}
+
+\subsection{神经网络的记号}
+
+\begin{definitionbox}[层编号与激活单元]
+用上标表示层编号，用下标表示同一层中的单元编号：
+\[
+  a_i^{(j)}=\text{第 }j\text{ 层的第 }i\text{ 个激活单元}.
+\]
+输入层的激活可以记作
+\[
+  a^{(1)}=\mathbf{x},
+\]
+并令 $a_0^{(j)}=1$ 表示第 $j$ 层的偏置单元。连接第 $j$ 层和第 $j+1$ 层的权重矩阵记作 $\Theta^{(j)}$。
+\end{definitionbox}
+
+\begin{keybox}[权重矩阵的尺寸]
+若第 $j$ 层有 $s_j$ 个非偏置单元，第 $j+1$ 层有 $s_{j+1}$ 个非偏置单元，则
+\[
+  \Theta^{(j)}\in\mathbb{R}^{s_{j+1}\times(s_j+1)}.
+\]
+行数对应下一层的神经元个数，列数对应当前层的神经元个数加一个偏置单元。矩阵中的元素 $\Theta_{ik}^{(j)}$ 表示从第 $j$ 层的第 $k$ 个单元到第 $j+1$ 层第 $i$ 个单元的权重。
+\end{keybox}
+
+\begin{examplebox}[三层网络的结构]
+设输入层有 $3$ 个特征，隐藏层有 $3$ 个单元，输出层有 $1$ 个单元，则从输入层到隐藏层的权重矩阵尺寸为
+\[
+  \Theta^{(1)}\in\mathbb{R}^{3\times4},
+\]
+因为输入层包含 $3$ 个特征和 $1$ 个偏置单元；从隐藏层到输出层的矩阵尺寸为
+\[
+  \Theta^{(2)}\in\mathbb{R}^{1\times4}.
+\]
+这里的“三层”通常指输入层、隐藏层和输出层，不把偏置单元另算为一层。
+\end{examplebox}
+
+\section{前向传播与向量化计算}
+
+\subsection{逐层前向传播}
+
+\begin{definitionbox}[前向传播]
+从输入层开始，按照网络连接方向逐层计算输出的过程称为\concept{前向传播（Forward Propagation）}。对从第 $j$ 层到第 $j+1$ 层的连接，先计算
+\[
+  \mathbf{z}^{(j+1)}=\Theta^{(j)}\mathbf{a}^{(j)},
+\]
+再逐元素应用激活函数：
+\[
+  \mathbf{a}^{(j+1)}=g\!\left(\mathbf{z}^{(j+1)}\right).
+\]
+如果第 $j+1$ 层不是输出层，还要在激活向量前面补上偏置单元 $a_0^{(j+1)}=1$。
+\end{definitionbox}
+
+\begin{keybox}[两层网络的完整计算]
+对一个输入样本 $\mathbf{x}$，设 $\mathbf{a}^{(1)}=\mathbf{x}$，则两层参数的前向传播为
+\begin{align*}
+  \mathbf{z}^{(2)}&=\Theta^{(1)}\mathbf{a}^{(1)},\\
+  \mathbf{a}^{(2)}&=g\!\left(\mathbf{z}^{(2)}\right),\qquad a_0^{(2)}=1,\\
+  \mathbf{z}^{(3)}&=\Theta^{(2)}\mathbf{a}^{(2)},\\
+  h_{\Theta}(\mathbf{x})=a^{(3)}&=g\!\left(\mathbf{z}^{(3)}\right).
+\end{align*}
+其中 $h_{\Theta}$ 表示由全部权重矩阵 $\Theta^{(1)},\Theta^{(2)},\ldots$ 决定的神经网络假设函数。
+\end{keybox}
+
+\begin{examplebox}[神经网络像多层逻辑回归]
+如果暂时遮住输入层，只观察隐藏层到输出层，那么输出层的计算形式就是一个逻辑回归：
+\[
+  h_{\Theta}(\mathbf{x})
+  =g\!\left(\Theta_0^{(2)}a_0^{(2)}+\Theta_1^{(2)}a_1^{(2)}+\cdots\right).
+\]
+区别在于，逻辑回归直接使用原始特征 $x_i$，神经网络使用隐藏层产生的 $a_i^{(2)}$。这些中间激活可以看作由网络自动构造的更高级特征。
+\end{examplebox}
+
+\subsection{训练集上的矩阵化}
+
+\begin{definitionbox}[按列组织样本]
+前面的推导针对一个样本。若要同时处理 $m$ 个样本，可以把每个样本放在矩阵的一列：
+\[
+  X^T=\begin{bmatrix}
+    \mathbf{x}^{(1)}&\mathbf{x}^{(2)}&\cdots&\mathbf{x}^{(m)}
+  \end{bmatrix}.
+\]
+于是隐藏层的计算可写为
+\[
+  Z^{(2)}=\Theta^{(1)}X^T,
+  \qquad
+  A^{(2)}=g\!\left(Z^{(2)}\right),
+\]
+再给 $A^{(2)}$ 添加一行偏置单元后，继续计算下一层。矩阵化能够一次处理全部样本，并充分利用数值库中的矩阵运算。
+\end{definitionbox}
+
+\begin{mistakebox}[维度与偏置单元]
+\begin{itemize}
+  \item 忘记给隐藏层激活补 $a_0=1$，会导致下一层矩阵乘法的列数不匹配；
+  \item 把样本按行和按列的约定混用。当前公式把单个样本作为列向量，因此整个训练集使用 $X^T$；
+  \item 把 $\Theta^{(j)}$ 的行列含义写反。它的行数是下一层单元数，列数是当前层单元数加偏置；
+  \item 对矩阵直接套用激活函数时没有说明是逐元素计算。这里的 $g$ 作用于每个 $z$ 的元素。
+\end{itemize}
+\end{mistakebox}
+
+\section{神经网络学习出的特征}
+
+\subsection{从原始特征到高级特征}
+
+\begin{definitionbox}[自动学习特征]
+在逻辑回归中，模型主要依赖输入层的原始特征；即使加入多项式项，特征变换也通常需要人工决定。神经网络的隐藏层将上一层的特征重新组合，输出新的激活值，下一层再基于这些激活继续组合。
+
+因此，深层网络可以形成从边缘、纹理到局部结构等逐步抽象的表示。这里的“高级”是相对于网络输入而言，并不表示每个单元都具有独立、明确的人类语义。
+\end{definitionbox}
+
+\begin{tipbox}[为什么隐藏层有用]
+隐藏层把一个复杂问题拆成多个较简单的子问题：每个单元先学习一个局部判别模式，后续单元再组合这些模式。多层组合带来的表示能力，通常比一次性手工枚举所有多项式特征更灵活，也更适合图像等高维输入。
+\end{tipbox}
+
+\subsection{用神经元表示逻辑运算}
+
+\begin{examplebox}[AND 运算]
+令 $x_1,x_2\in\{0,1\}$，取一个带偏置的 Sigmoid 神经元：
+\[
+  h(x)=g(-30+20x_1+20x_2).
+\]
+当且仅当 $x_1=x_2=1$ 时，线性组合为正且足够大，输出接近 $1$；其他输入下输出接近 $0$。因此它近似实现
+\[
+  h(x)\approx x_1\operatorname{AND}x_2.
+\]
+\end{examplebox}
+
+\begin{examplebox}[OR 与 NOT 运算]
+对于 OR，可以改用
+\[
+  h(x)=g(-10+20x_1+20x_2),
+\]
+只要至少一个输入为 $1$，输出就接近 $1$。对于单输入 NOT，可以使用
+\[
+  h(x)=g(10-20x_1),
+\]
+输入 $0$ 时输出接近 $1$，输入 $1$ 时输出接近 $0$。
+
+这些权重只是说明可行的构造，并不是训练后唯一的参数组合。
+\end{examplebox}
+
+\subsection{组合神经元实现 XNOR}
+
+\begin{definitionbox}[XNOR 的逻辑分解]
+XNOR 在两个输入相同（都为 $0$ 或都为 $1$）时输出 $1$，可以分解为
+\[
+  \operatorname{XNOR}(x_1,x_2)
+  =(x_1\operatorname{AND}x_2)
+  \operatorname{OR}
+  ((\operatorname{NOT}x_1)\operatorname{AND}(\operatorname{NOT}x_2)).
+\]
+这说明非线性分类边界可以由多个简单的神经元组合得到，而不必由单个线性分类器直接完成。
+\end{definitionbox}
+
+\begin{examplebox}[一组可行的 XNOR 网络]
+隐藏层可以构造两个单元：
+\begin{align*}
+  a_1&=g(-30+20x_1+20x_2),\\
+  a_2&=g(30-20x_1-20x_2).
+\end{align*}
+其中 $a_1$ 近似 AND，$a_2$ 近似 $(\operatorname{NOT}x_1)\operatorname{AND}(\operatorname{NOT}x_2)$。输出层使用 OR 单元：
+\[
+  h_{\Theta}(x)=g(-10+20a_1+20a_2).
+\]
+于是 $(0,0)$ 和 $(1,1)$ 的输出接近 $1$，$(0,1)$ 和 $(1,0)$ 的输出接近 $0$。
+\end{examplebox}
+
+\begin{mistakebox}[逻辑运算例子的边界]
+\begin{itemize}
+  \item 这些例子使用人为指定的权重来解释表达能力，不等于已经完成了参数学习；
+  \item Sigmoid 输出是接近 $0$ 或 $1$ 的概率，不是数学上完全等于布尔值；
+  \item XNOR 需要组合多个单元，单个线性判定边界无法直接把两个对角区域与另外两个区域分开。
+\end{itemize}
+\end{mistakebox}
+
+\section{神经网络的多类分类}
+
+\begin{definitionbox}[多输出单元]
+当类别数为 $K$ 时，可以让输出层包含 $K$ 个单元。对于样本 $x$，输出向量可写成
+\[
+  \mathbf{a}^{(L)}=
+  \begin{bmatrix}a_1^{(L)}&a_2^{(L)}&\cdots&a_K^{(L)}\end{bmatrix}^{T}.
+\]
+标签使用 one-hot 表示：属于第 $k$ 类时，目标向量第 $k$ 个位置为 $1$，其余位置为 $0$。
+\end{definitionbox}
+
+\begin{keybox}[从输出向量得到类别]
+在本周课程的表述中，预测类别取输出层最大激活值对应的下标：
+\[
+  \hat y=\underset{k\in\{1,\ldots,K\}}{\operatorname{arg\,max}}\;a_k^{(L)}.
+\]
+例如，输出为 $[0.08,0.11,0.73,0.08]^T$ 时，预测为第 $3$ 类。对于现代多类分类，常用 Softmax 将输出解释为归一化概率；其具体代价函数和梯度将在后续内容中单独讨论。
+\end{keybox}
+
+\begin{examplebox}[识别行人、汽车、摩托车和卡车]
+若任务有四个类别，输出层设置四个单元，目标标签可以写为
+\begin{align*}
+  \text{行人}&=[1,0,0,0]^T, & \text{汽车}&=[0,1,0,0]^T,\\
+  \text{摩托车}&=[0,0,1,0]^T, & \text{卡车}&=[0,0,0,1]^T.
+\end{align*}
+输入层接收图像像素或其他特征，中间层逐步提取表示，输出层给出四个类别的响应。
+\end{examplebox}
+
+\section{本周知识脉络}
+
+\begin{keybox}[从非线性表示到多类输出]
+\footnotesize
+第四周的核心流程可以概括为：
+\begin{enumerate}
+  \item 高维多项式特征会导致组合数量爆炸，单个逻辑回归模型难以有效处理；
+  \item 神经网络用带激活函数的神经元和隐藏层自动构造中间特征，并用权重矩阵记录层间连接；
+  \item 前向传播逐层计算 $z$ 和 $a$，向量化时要保持矩阵维度和偏置单元一致；
+  \item 简单神经元组合可表示复杂的非线性函数，多类任务用多输出单元和 one-hot 标签表达；下一周学习如何用反向传播学习这些权重。
+\end{enumerate}
+\end{keybox}
+
+\end{document}

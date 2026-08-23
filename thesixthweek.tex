@@ -1,0 +1,86 @@
+\input{templates/weekly-note-style.tex}
+\begin{document}
+\topbar{吴恩达机器学习}{学习笔记}
+\notetitlecard{Study Notes Series}{2026 Spring}{吴恩达机器学习笔记(6)}{}{机器学习}{C++与草稿纸}
+
+\begin{summarybox}
+本周强调机器学习项目中的诊断与决策：先用训练集、交叉验证集和测试集评估模型，再根据偏差、方差和学习曲线决定下一步。随后讨论误差分析、类别不平衡、查准率与查全率，以及数据质量对性能的影响。
+\end{summarybox}
+
+\section{决定下一步做什么}
+\begin{keybox}[常见改进方向]
+当模型效果不理想时，可以增加训练数据、减少或增加特征、增加多项式项、减小或增大正则化参数 $\lambda$，或更换模型。选择哪条路取决于误差来自高偏差还是高方差，而不能只凭直觉修改。
+\end{keybox}
+\begin{definitionbox}[训练集、交叉验证集与测试集]
+把数据划分为训练集（train）、交叉验证集（cross-validation/dev）和测试集（test）：
+\[
+J_{\mathrm{train}}=\frac1{m_{\mathrm{train}}}\sum L(h_\theta(x),y),\quad
+J_{\mathrm{cv}}=\frac1{m_{\mathrm{cv}}}\sum L(h_\theta(x),y).
+\]
+训练集用于拟合参数，交叉验证集用于选择模型和超参数，测试集只用于最后一次无偏评估。常见划分可以是 $60\%/20\%/20\%$，数据量较大时也可采用 $98\%/1\%/1\%$。
+\end{definitionbox}
+
+\section{评估假设与模型选择}
+\begin{definitionbox}[交叉验证选择模型]
+对不同模型复杂度或不同 $\lambda$ 分别训练，选择交叉验证误差最小的模型：
+\[
+  d^*=\underset{d}{\arg\min}\;J_{\mathrm{cv}}(\theta^{(d)}).
+\]
+最后只在测试集上报告选定模型的泛化误差，避免把测试集信息泄露到模型选择过程。
+\end{definitionbox}
+\begin{keybox}[偏差与方差诊断]
+训练误差和交叉验证误差的相对大小有助于诊断：
+\begin{itemize}
+  \item 训练误差和交叉验证误差都高且相近：通常是高偏差，模型过于简单；
+  \item 训练误差低、交叉验证误差明显高：通常是高方差，模型过拟合；
+  \item 两者都低且差距小：模型通常处于较好的平衡状态。
+\end{itemize}
+不同任务的可接受误差还应与人类水平或基线模型比较。
+\end{keybox}
+
+\section{学习曲线与正则化}
+\begin{definitionbox}[学习曲线]
+逐渐增加训练样本量，分别记录训练误差和交叉验证误差，可以得到学习曲线。高偏差模型通常两条曲线很快靠近且都较高，继续增加数据帮助有限；高方差模型的训练误差低、验证误差高，增加数据往往有明显帮助。
+\end{definitionbox}
+\begin{tipbox}[正则化与偏差方差]
+对线性回归、逻辑回归或神经网络，改变 $\lambda$ 后比较 $J_{\mathrm{train}}$ 和 $J_{\mathrm{cv}}$，可以选择合适的正则化强度。应在交叉验证集上选择 $\lambda$，而不是用测试集反复试验。
+\end{tipbox}
+\begin{mistakebox}[不要只看训练误差]
+训练误差低并不说明模型能泛化；加入特征、提高多项式次数或减少 $\lambda$ 可能让训练误差下降，却让验证误差上升。模型选择必须同时观察验证表现和误差差距。
+\end{mistakebox}
+
+\section{机器学习系统的设计}
+\subsection{先做什么}
+\begin{keybox}[先建立可测量的基线]
+先明确目标、收集代表性验证数据，训练一个简单可运行的基线，再用验证误差和错误样本指导改进。优先做能带来最大预期收益的实验，而不是一次改动多个模块。
+\end{keybox}
+\subsection{误差分析}
+\begin{definitionbox}[误差分析]
+对验证集中的错误样本进行人工检查，统计错误类型和数量。例如垃圾邮件分类可以检查促销、钓鱼、拼写错误等类别。若某类错误占比很高，应优先收集或设计能处理该类错误的数据和特征。
+\end{definitionbox}
+\subsection{类别不平衡与度量}
+\begin{definitionbox}[查准率、查全率与 $F_1$]
+设 TP、FP、FN、TN 分别为真正例、假正例、假负例和真负例：
+\[
+\mathrm{Precision}=\frac{TP}{TP+FP},\qquad
+\mathrm{Recall}=\frac{TP}{TP+FN}.
+\]
+查准率衡量预测为正的样本有多少确实为正，查全率衡量所有正样本有多少被找出。二者的调和平均为
+\[
+F_1=\frac{2PR}{P+R}.
+\]
+类别极不平衡时，单看准确率可能产生误导，应报告这些度量和混淆矩阵。
+\end{definitionbox}
+\begin{tipbox}[阈值权衡]
+提高分类阈值通常会提高查准率、降低查全率；降低阈值则相反。应根据误报和漏报的业务代价选择阈值，而不是默认 $0.5$ 永远最优。
+\end{tipbox}
+\subsection{数据的重要性}
+\begin{keybox}[高质量数据的条件]
+数据应覆盖真实使用场景，标签定义一致，输入与部署时可获得的信息一致，并尽量减少系统性的测量偏差。增加数据前，应先确认当前瓶颈确实是高方差或数据覆盖不足。
+\end{keybox}
+
+\section{本周知识脉络}
+\begin{keybox}[用诊断驱动工程决策]
+可靠的流程是：建立基线，划分训练/交叉验证/测试集；同时比较训练误差和验证误差；用学习曲线与误差分析判断偏差、方差和主要错误类型；再决定收集数据、修改特征、调整正则化还是改变模型；最后用一次测试集评估报告结果。
+\end{keybox}
+\end{document}

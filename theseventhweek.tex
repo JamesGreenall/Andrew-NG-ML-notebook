@@ -1,0 +1,68 @@
+\input{templates/weekly-note-style.tex}
+\begin{document}
+\topbar{吴恩达机器学习}{学习笔记}
+\notetitlecard{Study Notes Series}{2026 Spring}{吴恩达机器学习笔记(7)}{}{机器学习}{C++与草稿纸}
+
+\begin{summarybox}
+本周介绍支持向量机（SVM）：用带间隔的优化目标寻找稳健的分类边界，理解大间隔分类的几何直觉，并使用核函数构造非线性分类器。重点是目标函数、参数 $C$、核参数和实际选型。
+\end{summarybox}
+
+\section{支持向量机的优化目标}
+\begin{definitionbox}[从逻辑回归到 SVM]
+逻辑回归的单样本损失可以看作两段惩罚函数。SVM 用近似折线损失替代对数损失：正类希望 $\theta^Tx\geq1$，负类希望 $\theta^Tx\leq-1$。设 $y\in\{-1,1\}$，则约束可写作
+\[
+y\,\theta^Tx\geq1.
+\]
+\end{definitionbox}
+\begin{keybox}[硬间隔与软间隔目标]
+线性 SVM 的简化目标是
+\[
+\underset{\theta}{\operatorname{minimize}}
+\;\frac12\sum_{j=1}^{n}\theta_j^2+C\sum_{i=1}^{m}\mathrm{cost}_1(\theta^Tx^{(i)},y^{(i)}),
+\]
+其中 $\mathrm{cost}_1$ 和 $\mathrm{cost}_0$ 分别对应正类和负类的折线损失。第一项倾向于让参数范数小，第二项惩罚分类错误或落入间隔内的样本。实际实现通常使用凸二次规划求解，而不是手写梯度下降。
+\end{keybox}
+
+\section{大间隔分类的直观理解}
+\begin{definitionbox}[几何间隔]
+分类边界由 $\theta^Tx=0$ 给出。参数向量 $\theta$ 垂直于边界，点到边界的距离与 $|\theta^Tx|/\|\theta\|$ 成正比。SVM 不仅要求分类正确，还希望正负样本离边界有尽可能大的安全间隔。
+\end{definitionbox}
+\begin{examplebox}[为什么间隔更稳健]
+若存在多个能把训练样本分开的直线，靠近样本的边界对噪声和新样本更敏感；大间隔边界尽量远离两侧样本，通常具有更好的泛化能力。落在间隔边界附近、决定最终分界的样本称为支持向量。
+\end{examplebox}
+\begin{tipbox}[$C$ 的作用]
+$C$ 是误分类惩罚的权重：$C$ 很大时更强调训练集拟合，间隔可能变窄并提高方差；$C$ 较小时允许少量训练错误，间隔更宽，通常更抗噪声。实际应使用交叉验证选择 $C$。
+\end{tipbox}
+
+\section{核函数与非线性边界}
+\begin{definitionbox}[特征映射]
+对输入 $x$ 构造一组相似度特征 $f_1(x),\ldots,f_m(x)$，再在这些新特征上训练线性 SVM，就可以得到原始空间中的非线性边界。核函数直接计算样本相似度，避免显式构造高维特征。
+\end{definitionbox}
+\begin{examplebox}[高斯核]
+高斯核（RBF kernel）常写为
+\[
+K(x,l)=\exp\!\left(-\frac{\|x-l\|^2}{2\sigma^2}\right).
+\]
+当 $x$ 接近地标 $l$ 时，核值接近 $1$；距离较远时接近 $0$。$\sigma$ 控制相似度衰减速度：$\sigma$ 小会形成局部、复杂的边界，$\sigma$ 大则边界更平滑。
+\end{examplebox}
+\begin{mistakebox}[核函数使用条件]
+\begin{itemize}
+  \item 特征尺度差异很大时，距离会被大尺度特征主导，应先进行特征缩放；
+  \item 不是所有相似度都能作为合法核函数，常见实现应使用经过验证的核；
+  \item $C$ 和 $\sigma$ 都是超参数，应在交叉验证集上联合选择；
+  \item 线性核在特征已经足够多或样本极大时可能更快，不必默认使用高斯核。
+\end{itemize}
+\end{mistakebox}
+
+\section{如何使用 SVM}
+\begin{keybox}[模型选择建议]
+样本数 $m$ 很大而特征数 $n$ 较小，可考虑线性 SVM；$m$ 中等时可使用高斯核；$n$ 和 $m$ 都很大时，线性模型或近似核方法通常更实际。神经网络也能得到类似的非线性分类能力，但训练和部署成本不同。
+\end{keybox}
+\begin{tipbox}[多类别 SVM]
+多类别任务可以训练多个一对多分类器，选择决策函数值最大的类别；也可以使用库提供的多类策略。预测分数不一定是校准概率，需要概率解释时应额外进行校准。
+\end{tipbox}
+\section{本周知识脉络}
+\begin{keybox}[大间隔与核技巧]
+SVM 以参数范数和分类损失共同定义优化目标；几何上寻找离样本更远的边界；核函数把相似度变成可学习的高维表示；$C$ 控制误差惩罚，$\sigma$ 控制高斯核的局部程度。数据缩放、交叉验证和计算规模决定最终选型。
+\end{keybox}
+\end{document}

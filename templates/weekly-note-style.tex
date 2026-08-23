@@ -1,0 +1,56 @@
+\documentclass[12pt,a4paper]{ctexart}
+\usepackage[left=2.5cm,right=2.5cm,top=2.3cm,bottom=2.3cm]{geometry}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{enumitem}
+\usepackage{tabularx}
+\usepackage{amsmath,amssymb}
+\usepackage{hyperref}
+\tcbuselibrary{skins,breakable}
+
+\definecolor{MainColor}{HTML}{2A6F73}
+\definecolor{SecondColor}{HTML}{3CAEA3}
+\definecolor{LightMain}{HTML}{EAF7F6}
+\definecolor{TitleDark}{HTML}{1F3A40}
+\definecolor{TextGray}{HTML}{555555}
+\definecolor{BorderGray}{HTML}{CBD5D6}
+\definecolor{WarnColor}{HTML}{F2B35D}
+\definecolor{ErrorColor}{HTML}{C94C4C}
+\definecolor{DefineColor}{HTML}{6C63B7}
+
+\linespread{1.25}
+\setlength{\parindent}{2em}
+\setlength{\parskip}{0.25em}
+\hypersetup{colorlinks=true,linkcolor=MainColor,urlcolor=MainColor}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot[L]{\textcolor{MainColor}{机器学习笔记}}
+\fancyfoot[R]{\textcolor{MainColor}{\thepage}}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+\newcommand{\topbar}[2]{\noindent{\small\textcolor{MainColor}{#1}}\hfill{\small\bfseries\textcolor{TitleDark}{#2}}\par\vspace{0.35em}{\color{BorderGray}\hrule}\vspace{1.2em}}
+\newcommand{\notetitlecard}[6]{
+\begin{tcolorbox}[enhanced,colback=white,colframe=BorderGray,boxrule=0.6pt,arc=2mm,left=12pt,right=12pt,top=10pt,bottom=10pt,borderline west={4pt}{0pt}{SecondColor}]
+\begin{tabularx}{\linewidth}{X r}
+{\small\textcolor{TextGray}{#1}} & {\small\textcolor{TextGray}{#2}} \\[0.9em]
+\multicolumn{2}{l}{{\Huge\bfseries\textcolor{MainColor}{#3}}} \\[0.45em]
+\multicolumn{2}{l}{{\large\textcolor{SecondColor!90!black}{#4}}} \\[0.45em]
+\multicolumn{2}{l}{{\small\textcolor{TextGray}{课程：#5 \qquad 作者：#6}}}
+\end{tabularx}\end{tcolorbox}\vspace{1em}}
+\newtcolorbox{summarybox}[1][本节摘要]{enhanced,breakable,colback=LightMain,colframe=SecondColor,colbacktitle=SecondColor,coltitle=white,title={#1},fonttitle=\bfseries,boxrule=0.6pt,arc=2mm,left=12pt,right=12pt,top=10pt,bottom=10pt}
+\newtcolorbox{definitionbox}[1][定义]{enhanced,breakable,colback=DefineColor!6,colframe=DefineColor,colbacktitle=DefineColor,coltitle=white,title={#1},fonttitle=\bfseries,boxrule=0.6pt,arc=2mm,left=12pt,right=12pt,top=10pt,bottom=10pt}
+\newtcolorbox{keybox}[1][重点]{enhanced,breakable,colback=MainColor!5,colframe=MainColor,colbacktitle=MainColor,coltitle=white,title={#1},fonttitle=\bfseries,boxrule=0.6pt,arc=2mm,left=12pt,right=12pt,top=10pt,bottom=10pt}
+\newtcolorbox{examplebox}[1][例题]{enhanced,breakable,colback=white,colframe=SecondColor,colbacktitle=SecondColor!85!black,coltitle=white,title={#1},fonttitle=\bfseries,boxrule=0.6pt,arc=2mm,left=12pt,right=12pt,top=10pt,bottom=10pt}
+\newtcolorbox{mistakebox}[1][易错点]{enhanced,breakable,colback=ErrorColor!5,colframe=ErrorColor,colbacktitle=ErrorColor,coltitle=white,title={#1},fonttitle=\bfseries,boxrule=0.6pt,arc=2mm,left=12pt,right=12pt,top=10pt,bottom=10pt}
+\newtcolorbox{tipbox}[1][提示]{enhanced,breakable,colback=WarnColor!10,colframe=WarnColor,colbacktitle=WarnColor,coltitle=white,title={#1},fonttitle=\bfseries,boxrule=0.6pt,arc=2mm,left=12pt,right=12pt,top=10pt,bottom=10pt}
+\titleformat{\section}{\Large\bfseries\color{MainColor}}{\thesection}{0.8em}{}
+\titleformat{\subsection}{\large\bfseries\color{TitleDark}}{\thesubsection}{0.8em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries\color{SecondColor!80!black}}{\thesubsubsection}{0.8em}{}
+\setlist[itemize]{leftmargin=2.2em,itemsep=0.3em,topsep=0.4em}
+\setlist[enumerate]{leftmargin=2.2em,itemsep=0.3em,topsep=0.4em}
+\newcommand{\important}[1]{\textbf{\textcolor{MainColor}{#1}}}
+\newcommand{\warning}[1]{\textbf{\textcolor{ErrorColor}{#1}}}
+\newcommand{\concept}[1]{\textbf{\textcolor{DefineColor}{#1}}}

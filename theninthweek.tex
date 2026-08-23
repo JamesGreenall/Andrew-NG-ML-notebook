@@ -1,0 +1,112 @@
+\input{templates/weekly-note-style.tex}
+\begin{document}
+\topbar{吴恩达机器学习}{学习笔记}
+\notetitlecard{Study Notes Series}{2026 Spring}{吴恩达机器学习笔记(9)}{}{机器学习}{C++与草稿纸}
+
+\begin{summarybox}
+本周介绍异常检测和推荐系统。异常检测用正常样本建立概率模型，再根据概率密度识别异常；推荐系统则从用户—物品评分中学习用户偏好和物品特征，并用协同过滤与低秩分解产生推荐。
+\end{summarybox}
+
+\section{异常检测}
+\subsection{问题动机}
+\begin{definitionbox}[异常检测设定]
+训练集通常主要由正常样本组成，目标是发现概率很低的样本，例如服务器故障、欺诈交易或传感器异常。为每个特征建立概率密度 $p(x_j)$，组合得到
+\[
+p(x)=\prod_{j=1}^{n}p(x_j).
+\]
+若 $p(x)<\varepsilon$，就把样本标为异常。
+\end{definitionbox}
+\subsection{高斯分布模型}
+\begin{definitionbox}[单变量高斯分布]
+对特征 $x_j$ 估计均值和方差：
+\[
+\mu_j=\frac1m\sum_{i=1}^{m}x_j^{(i)},\qquad
+\sigma_j^2=\frac1m\sum_{i=1}^{m}(x_j^{(i)}-\mu_j)^2.
+\]
+高斯密度为
+\[
+p(x_j;\mu_j,\sigma_j^2)=\frac1{\sqrt{2\pi}\sigma_j}
+\exp\!\left(-\frac{(x_j-\mu_j)^2}{2\sigma_j^2}\right).
+\]
+\end{definitionbox}
+\begin{keybox}[开发与评价]
+用正常训练样本估计参数，在交叉验证集中混入已知正常和异常样本，选择阈值 $\varepsilon$，再在测试集上报告查准率、查全率或 $F_1$。不能只在正常训练集上选择阈值，因为那样无法衡量真正的异常识别能力。
+\end{keybox}
+\begin{tipbox}[异常检测与监督学习]
+异常检测适合异常类别很少、未来异常类型未知的场景；监督学习适合正负样本都较多且未来错误类型与历史相似的场景。若已有大量标注异常样本，直接使用分类器通常更有效。
+\end{tipbox}
+\subsection{选择特征与多元高斯}
+\begin{examplebox}[构造更有辨识力的特征]
+若两个特征单独看都近似正常，但它们的组合关系异常，可以增加比值、乘积或差值等特征。特征工程的目标是让异常样本的概率密度明显低于正常样本。
+\end{examplebox}
+\begin{definitionbox}[多元高斯分布]
+当特征相关性很强时，可以直接用协方差矩阵 $\Sigma$ 建立多元高斯模型：
+\[
+p(x)=\frac1{(2\pi)^{n/2}|\Sigma|^{1/2}}
+\exp\!\left(-\frac12(x-\mu)^T\Sigma^{-1}(x-\mu)\right).
+\]
+它可以学习倾斜的等密度椭圆，但需要更多样本，并要求协方差矩阵可逆或使用稳定的数值处理。
+\end{definitionbox}
+
+\section{推荐系统}
+\subsection{问题形式化}
+\begin{definitionbox}[评分矩阵]
+设 $n_u$ 个用户、$n_m$ 个物品，$r(i,j)=1$ 表示用户 $j$ 给物品 $i$ 评分，$y^{(i,j)}$ 为评分值。记用户是否评价过物品的指示量为 $r(i,j)$，目标是预测未评分项目的偏好。
+\end{definitionbox}
+\subsection{基于内容的推荐}
+\begin{keybox}[用户和物品特征]
+如果每个物品有特征向量 $x^{(i)}$，可以为用户 $j$ 学习参数 $\theta^{(j)}$，预测
+\[
+\hat y^{(i,j)}=(\theta^{(j)})^Tx^{(i)}.
+\]
+这与多个用户各自训练线性回归相似，但需要为用户学习偏好参数。
+\end{keybox}
+\subsection{协同过滤}
+\begin{definitionbox}[同时学习两类参数]
+当物品特征未知时，协同过滤同时学习用户参数 $\theta^{(j)}$ 和物品特征 $x^{(i)}$：
+\[
+\min_{x,\theta}\frac12\sum_{(i,j):r(i,j)=1}
+\left((\theta^{(j)})^Tx^{(i)}-y^{(i,j)}\right)^2
+\]
+加上对两类参数的正则化。用户评分越相似，算法越可能学到相近的用户偏好或物品表示。
+\end{definitionbox}
+\begin{keybox}[协同过滤的梯度]
+对用户参数和物品特征分别求导即可用梯度下降更新：
+\[
+\theta^{(j)}\leftarrow\theta^{(j)}-\alpha\sum_{i:r(i,j)=1}
+\left((\theta^{(j)})^Tx^{(i)}-y^{(i,j)}\right)x^{(i)},
+\]
+\[
+x^{(i)}\leftarrow x^{(i)}-\alpha\sum_{j:r(i,j)=1}
+\left((\theta^{(j)})^Tx^{(i)}-y^{(i,j)}\right)\theta^{(j)}.
+\]
+\end{keybox}
+\subsection{低秩矩阵分解与均值归一化}
+\begin{tipbox}[向量化预测]
+把物品特征组成矩阵 $X$、用户参数组成矩阵 $\Theta$，评分预测矩阵可写成
+\[
+X\Theta^T.
+\]
+这是一种低秩近似：用较短的隐向量表示大量用户—物品关系。
+\end{tipbox}
+\begin{definitionbox}[均值归一化]
+对每个物品先计算已知评分的均值 $\mu_i$，训练残差
+\[
+y^{(i,j)}\leftarrow y^{(i,j)}-\mu_i,
+\]
+预测后再加回 $\mu_i$。这样可以让初始预测从“该物品的平均受欢迎程度”开始，而不是全部从零开始。
+\end{definitionbox}
+\begin{mistakebox}[推荐系统的注意事项]
+\begin{itemize}
+  \item 只在已评分条目上计算代价，不要把未知评分当成 $0$；
+  \item 推荐系统中的隐特征通常没有固定语义，不应过度解释单个维度；
+  \item 评价指标应模拟真实推荐场景，不能只比较训练集重构误差；
+  \item 新用户或新物品缺少历史数据时会遇到冷启动问题，需要额外特征或交互设计。
+\end{itemize}
+\end{mistakebox}
+
+\section{本周知识脉络}
+\begin{keybox}[概率模型与隐变量表示]
+异常检测学习“正常数据长什么样”，用低概率阈值发现异常；推荐系统学习“用户和物品如何匹配”，用协同过滤和低秩隐向量预测偏好。两者都需要合理的验证集、稳定的特征表示和面向实际应用的评价指标。
+\end{keybox}
+\end{document}
